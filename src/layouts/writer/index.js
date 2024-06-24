@@ -1,4 +1,3 @@
-// import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -122,14 +121,14 @@ function Writers() {
                 <MDTypography variant="h6" color="white">
                   Writers
                 </MDTypography>
-                <Button
+                {/* <Button
                   variant="contained"
                   color="info"
                   startIcon={<AddCircleOutlineIcon />}
                   onClick={() => navigate('/add-writer')}
                 >
                   Add Writer
-                </Button>
+                </Button> */}
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
@@ -152,4 +151,5 @@ function Writers() {
 export default Writers;
 
 // Storing the token in local storage
-localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTg5NTcwNzIsImV4cCI6MTcxODk2MDY3Mn0.iZcbnY2NgOzyvmABh51mC2QNuElR-lgcyRDrYR1d3MU');
+localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTkyMzUyNDYsImV4cCI6MTcxOTIzODg0Nn0._Oi3ziWbx_UjvvO2IFOZQ6DaYx2PX4-4plr0fnS2Je8');
+

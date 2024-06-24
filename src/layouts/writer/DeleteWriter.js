@@ -82,4 +82,4 @@ function DeleteWriter() {
 export default DeleteWriter;
 
 // Example of storing the token in local storage:
-localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTg5NTcwNzIsImV4cCI6MTcxODk2MDY3Mn0.iZcbnY2NgOzyvmABh51mC2QNuElR-lgcyRDrYR1d3MU');
+localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTkyMzIzMzcsImV4cCI6MTcxOTIzNTkzN30.XWHwx5brR27B1ot_Irf2QZaFvHBNhqKeik_vQ0jiGMk');

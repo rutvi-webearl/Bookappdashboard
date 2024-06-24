@@ -7,6 +7,8 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  FormControlLabel,
+  Checkbox,
   Card,
   Grid
 } from '@mui/material';
@@ -25,7 +27,7 @@ const EditWriter = () => {
     city: '',
     state: '',
     country: '',
-    gender: 'Male', // Ensure a valid initial value
+    gender: '', // Ensure a valid initial value
     photo: '',
     status: '',
     mobile: '',
@@ -164,6 +166,18 @@ const EditWriter = () => {
                       <MenuItem value="Other">Other</MenuItem>
                     </Select>
                   </FormControl>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={formData.status}
+                        onChange={(e) =>
+                          setFormData({ ...formData, status: e.target.checked })
+                        }
+                        color="primary"
+                      />
+                    }
+                    label="Status"
+                  />
                   <TextField
                     fullWidth
                     label="Photo"
@@ -198,7 +212,7 @@ const EditWriter = () => {
                     onChange={handleChange}
                   />
                   <MDBox mt={2} display="flex" justifyContent="space-between">
-                    <Button variant="contained" color="secondary" onClick={() => navigate('/writer')}>
+                    <Button variant="contained" color="primary" onClick={() => navigate('/writer')}>
                       Cancel
                     </Button>
                     <Button variant="contained" color="primary" onClick={handleSave}>
@@ -219,4 +233,4 @@ const EditWriter = () => {
 export default EditWriter;
 
 // Example of storing the token in local storage:
-localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTg5NTcwNzIsImV4cCI6MTcxODk2MDY3Mn0.iZcbnY2NgOzyvmABh51mC2QNuElR-lgcyRDrYR1d3MU');
+localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTkyMzUyNDYsImV4cCI6MTcxOTIzODg0Nn0._Oi3ziWbx_UjvvO2IFOZQ6DaYx2PX4-4plr0fnS2Je8');
