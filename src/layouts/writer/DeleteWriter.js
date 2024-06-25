@@ -33,7 +33,7 @@ function DeleteWriter() {
 
   const handleDelete = async () => {
     try {
-      const authToken = localStorage.getItem('authToken');
+      const authToken = localStorage.getItem('token');
       if (!authToken) {
         console.error('No auth token found in local storage');
         return;
@@ -81,5 +81,4 @@ function DeleteWriter() {
 
 export default DeleteWriter;
 
-// Example of storing the token in local storage:
-localStorage.setItem('authToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTkyMzIzMzcsImV4cCI6MTcxOTIzNTkzN30.XWHwx5brR27B1ot_Irf2QZaFvHBNhqKeik_vQ0jiGMk');
+

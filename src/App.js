@@ -257,6 +257,7 @@ import AddWriter from "layouts/writer/AddWriter";
 import EditWriter from "layouts/writer/EditWriter";
 import ForgetPassword from "layouts/authentication/sign-in/forgotpass";
 import DeleteWriter from "layouts/writer/DeleteWriter";
+import Basic from "layouts/authentication/sign-in";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -380,9 +381,8 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          {getRoutes(writeroutes)}
           <Route path="/add-writer" element={<AddWriter />} /> {/* AddWriter route */}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -410,7 +410,8 @@ export default function App() {
         <Route path="/edit-writer/:id" element={<EditWriter />} />
         <Route path="/delete-writer/:id" element={<DeleteWriter />} />
         <Route path="/forgot-pass" element={<ForgetPassword />} />
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="/authentication/sign-in" element={<Basic />} />
+        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
       </Routes>
     </ThemeProvider>
   );

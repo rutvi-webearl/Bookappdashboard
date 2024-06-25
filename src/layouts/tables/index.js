@@ -341,6 +341,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDSnackbar from "components/MDSnackbar";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -370,6 +371,9 @@ function Tables() {
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [deleteCategoryId, setDeleteCategoryId] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarColor, setSnackbarColor] = useState("info");
 
   const fetchCategories = async () => {
     try {
@@ -378,7 +382,9 @@ function Tables() {
       );
       if (response.ok) {
         const jsonData = await response.json();
-        setCategories(jsonData);
+        // Sort categories by a timestamp field (example: createdAt or _id)
+        const sortedCategories = jsonData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setCategories(sortedCategories);
       } else {
         console.error("Failed to fetch categories");
       }
@@ -403,14 +409,26 @@ function Tables() {
       if (response.ok) {
         const jsonData = await response.json();
         console.log("Category added:", jsonData);
+        
+        // Fetch categories again after adding to get the latest list
+        fetchCategories();
+        
+        setSnackbarMessage("Category added successfully!");
+        setSnackbarColor("success");
+        setSnackbarOpen(true);
         setCategoryName("");
         setOpenInsertForm(false);
-        fetchCategories();
       } else {
         console.error("Failed to add category");
+        setSnackbarMessage("Failed to add category");
+        setSnackbarColor("error");
+        setSnackbarOpen(true);
       }
     } catch (error) {
       console.error("Error adding category:", error);
+      setSnackbarMessage("Error adding category");
+      setSnackbarColor("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -428,16 +446,25 @@ function Tables() {
         }
       );
       if (response.ok) {
-        const jsonData = await response.json();
-        console.log("Category updated:", jsonData);
+        const updatedCategory = { _id, category_name: categoryName };
+        setCategories(categories.map(cat => cat._id === _id ? updatedCategory : cat));
+        console.log("Category updated:", updatedCategory);
+        setSnackbarMessage("Category updated successfully!");
+        setSnackbarColor("success");
+        setSnackbarOpen(true);
         setCategoryName("");
         setOpenEditForm(false);
-        fetchCategories();
       } else {
         console.error("Failed to update category");
+        setSnackbarMessage("Failed to update category");
+        setSnackbarColor("error");
+        setSnackbarOpen(true);
       }
     } catch (error) {
       console.error("Error updating category:", error);
+      setSnackbarMessage("Error updating category");
+      setSnackbarColor("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -452,12 +479,21 @@ function Tables() {
       if (response.ok) {
         const jsonData = await response.json();
         console.log("Category deleted:", jsonData);
+        setSnackbarMessage("Category deleted successfully!");
+        setSnackbarColor("success");
+        setSnackbarOpen(true);
         fetchCategories();
       } else {
         console.error("Failed to delete category");
+        setSnackbarMessage("Failed to delete category");
+        setSnackbarColor("error");
+        setSnackbarOpen(true);
       }
     } catch (error) {
       console.error("Error deleting category:", error);
+      setSnackbarMessage("Error deleting category");
+      setSnackbarColor("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -562,8 +598,20 @@ function Tables() {
       </MDBox>
       <Footer />
 
+      {/* Snackbar for notifications */}
+      <MDSnackbar
+        color={snackbarColor}
+        icon="notifications"
+        title="Notification"
+        content={snackbarMessage}
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        close={true}
+        bgWhite
+      />
+
       {/* Insert Form Dialog */}
-      <Dialog open={openInsertForm} onClose={() => setOpenInsertForm(false)}>
+      <Dialog open={openInsertForm} onClose={() => setOpenInsertForm(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Insert Category</DialogTitle>
         <DialogContent>
           <TextField
@@ -588,7 +636,9 @@ function Tables() {
       </Dialog>
 
       {/* Edit Form Dialog */}
-      <Dialog open={openEditForm} onClose={() => setOpenEditForm(false)}>
+      <Dialog open={openEditForm} onClose={() => setOpenEditForm(false)}
+        maxwidth="md"
+        fullWidth>
         <DialogTitle>Edit Category</DialogTitle>
         <DialogContent>
           <TextField
