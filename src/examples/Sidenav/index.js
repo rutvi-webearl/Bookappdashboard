@@ -186,52 +186,22 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <MDBox p={2} mt="auto">
           <MDButton
-            onClick={openDialog}
+            onClick={confirmLogout}
             variant="gradient"
             color={sidenavColor}
             fullWidth
           >
             YES
           </MDButton>
-        </MDBox>
-        <MDBox p={2} mt="auto">
           <MDButton
-            onClick={openDialog}
+            onClick={closeDialog}
             variant="gradient"
             color={sidenavColor}
             fullWidth
           >
             NO
           </MDButton>
-        </MDBox>
-          {/* <MDButton
-            onClick={closeDialog}
-            color={sidenavColor}
-            // sx={{
-            //   backgroundColor: (theme) => theme.palette[sidenavColor].main,
-            //   color: "white",
-            //   "&:hover": {
-            //     backgroundColor: (theme) => theme.palette[sidenavColor].dark,
-            //   },
-            // }}
-          >
-            No
-          </MDButton>
-          <Button
-            onClick={confirmLogout}
-            sx={{
-              backgroundColor: (theme) => theme.palette[sidenavColor].main,
-              color: "white",
-              "&:hover": {
-                backgroundColor: (theme) => theme.palette[sidenavColor].dark,
-              },
-            }}
-            autoFocus
-          >
-            Yes
-          </Button> */}
         </DialogActions>
       </Dialog>
     </>
