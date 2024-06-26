@@ -273,14 +273,14 @@ function Writers() {
                 <MDTypography variant="h6" color="white">
                   Writers
                 </MDTypography>
-                <Button
+                {/* <Button
                   variant="contained"
                   color="info"
                   startIcon={<AddCircleOutlineIcon />}
                   onClick={() => navigate('/add-writer')}
                 >
                   Add Writer
-                </Button>
+                </Button> */}
               </MDBox>
               <MDBox pt={3}>
                 <DataTable

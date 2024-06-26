@@ -442,11 +442,11 @@ function Tables() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ category_name: categoryName }),
+          body: JSON.stringify({ category_name: categoryName.trim() }), // Trimmed to avoid leading/trailing spaces
         }
       );
       if (response.ok) {
-        const updatedCategory = { _id, category_name: categoryName };
+        const updatedCategory = { _id, category_name: categoryName.trim() }; // Trimmed
         setCategories(categories.map(cat => cat._id === _id ? updatedCategory : cat));
         console.log("Category updated:", updatedCategory);
         setSnackbarMessage("Category updated successfully!");
@@ -467,7 +467,7 @@ function Tables() {
       setSnackbarOpen(true);
     }
   };
-
+  
   const handleDelete = async (_id) => {
     try {
       const response = await fetch(
@@ -502,11 +502,15 @@ function Tables() {
     if (categoryName.trim() === "") {
       setCategoryNameError("Category name is required");
       valid = false;
+    } else if (categoryName.startsWith(" ")) {
+      setCategoryNameError("Category name should not start with a space");
+      valid = false;
     } else {
       setCategoryNameError("");
     }
     return valid;
   };
+  
 
   useEffect(() => {
     fetchCategories();
