@@ -32,6 +32,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
+
 import Sidenav from "writerexamples/Sidenav"; // Import Sidenav
 import writerroutes from "writerroutes"; // Import routes
 
@@ -45,11 +46,25 @@ const Author = ({ name }) => (
 
 function Tables() {
   const columns = [
-    { Header: "Book ID", accessor: "book_id", width: "10%" },
+    {
+      Header: "Cover Photo",
+      accessor: "book_cover_photo",
+      width: "10%",
+      Cell: ({ value }) => (
+        <img
+          src={value}
+          style={{
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+            objectFit: "cover"
+          }}
+        />
+      )
+    },
     { Header: "Title", accessor: "book_title", width: "15%" },
     { Header: "Description", accessor: "book_description", width: "25%" },
-    { Header: "Cover Photo", accessor: "book_cover_photo", width: "10%" },
-    { Header: "Page Count", accessor: "book_page", width: "10%" },
+    // { Header: "Page Count", accessor: "book_page", width: "10%" },
     {
       Header: "Actions",
       accessor: "_id",
@@ -75,10 +90,10 @@ function Tables() {
       ),
     },
   ];
-  const [snackbarMessage, setSnackbarMessage] = useState({ message: "", severity: "success" });
+  
+  
+const [snackbarMessage, setSnackbarMessage] = useState({ message: "", severity: "success" });
 const [snackbarOpen, setSnackbarOpen] = useState(false);
-  // const [snackbarOpen, setSnackbarOpen] = useState(false);
-  // const [snackbarMessage, setSnackbarMessage] = useState("");
   const [openInsertForm, setOpenInsertForm] = useState(false);
   const [openEditForm, setOpenEditForm] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -286,9 +301,6 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
     }
   };
 
-
-  
-
   const handleEditForm = (bookId) => {
     const bookToEdit = books.find((book) => book._id === bookId);
     setBookId(bookId);
@@ -318,11 +330,12 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
     author_id: book.author_id,
     book_title: <Author name={book.book_title} />,
     book_description: book.book_description,
-    book_cover_photo: book.book_cover_photo,
+    book_cover_photo: book.book_cover_photo,  // Ensure this is a URL to the image
     book_page: book.book_page.length,
     status: book.status,
     _id: book._id,
   }));
+  
 
   // const handleSnackbarOpen = (message) => {
   //   setSnackbarMessage(message);
@@ -592,6 +605,7 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
                   {category.category_name}
                 </MenuItem>
               ))}
+              
             </Select>
           </FormControl>
           <TextField
@@ -705,8 +719,6 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
 }
 
 export default Tables;
-
-
 
 
 
