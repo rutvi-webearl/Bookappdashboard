@@ -190,7 +190,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             onClick={confirmLogout}
             variant="gradient"
             color={sidenavColor}
-            fullWidth
+            
           >
             YES
           </MDButton>
@@ -198,7 +198,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             onClick={closeDialog}
             variant="gradient"
             color={sidenavColor}
-            fullWidth
+            
           >
             NO
           </MDButton>

@@ -34,12 +34,14 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
-
+import routes from "routes";
+import Sidenav from "examples/Sidenav";
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
   return (
     <DashboardLayout>
+      <Sidenav routes={routes} brandName="Admin Dashboard" />
       <DashboardNavbar />
       <MDBox py={3}>
         <Grid container spacing={3}>

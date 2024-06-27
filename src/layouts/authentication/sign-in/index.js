@@ -425,7 +425,6 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput
                 type={showPassword ? "text" : "password"}
-                // type="password"
                 label="Password"
                 fullWidth
                 value={password}
@@ -462,13 +461,13 @@ function Basic() {
                 </Link>
               </MDTypography>
             </MDBox>
-            {/* <MDBox mt={3} mb={1} textAlign="center">
+            <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text" mt={1}>
-                <Link to="/writer/signin" style={{ color: "inherit" }}>
+                <Link to="/writer-signin" style={{ color: "inherit" }}>
                   If you are author, click here
                 </Link>
               </MDTypography>
-            </MDBox> */}
+            </MDBox>
           </MDBox>
         </MDBox>
       </Card>
@@ -487,3 +486,4 @@ function Basic() {
 }
 
 export default Basic;
+

@@ -235,7 +235,7 @@ function Writers() {
     country: writer.country,
     gender: writer.gender,
     photo: writer.photo,
-    status: writer.status,
+    status: writer.status ? 'true' : 'false',
     mobile: writer.mobile,
     email: writer.email,
     actions: (

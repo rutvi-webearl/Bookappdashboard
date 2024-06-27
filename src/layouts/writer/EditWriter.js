@@ -666,6 +666,9 @@ import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import Footer from 'examples/Footer';
 import CountryStateCity from './CountryStateCity.json';
 import MDSnackbar from 'components/MDSnackbar';
+import { useMaterialUIController } from 'context';
+import MDButton from 'components/MDButton';
+
 
 const EditWriter = () => {
   const { id } = useParams();
@@ -689,6 +692,9 @@ const EditWriter = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarColor, setSnackbarColor] = useState('info');
+
+  const [controller] = useMaterialUIController();
+  const { sidenavColor } = controller;
 
   useEffect(() => {
     const fetchWriter = async () => {
@@ -781,21 +787,49 @@ const EditWriter = () => {
     }
   };
   
-  const handleSave = async () => {
-    try {
-      if (!formData.name.trim()) {
-        setSnackbarMessage('Name should not be empty');
-        setSnackbarColor('error');
-        setSnackbarOpen(true);
-        return;
-      }
+  // const handleSave = async () => {
+  //   try {
+  //     if (!formData.name.trim()) {
+  //       setSnackbarMessage('Name should not be empty');
+  //       setSnackbarColor('error');
+  //       setSnackbarOpen(true);
+  //       return;
+  //     }
   
-      if (formData.email && !validateEmail(formData.email)) {
-        setSnackbarMessage('Invalid email format');
-        setSnackbarColor('error');
-        setSnackbarOpen(true);
-        return;
-      }
+  //     if (formData.email && !validateEmail(formData.email)) {
+  //       setSnackbarMessage('Invalid email format');
+  //       setSnackbarColor('error');
+  //       setSnackbarOpen(true);
+  //       return;
+  //     }
+      const handleSave = async () => {
+        try {
+          // Check if any required field is empty
+          const requiredFields = ['name', 'dob', 'country', 'state', 'city', 'gender', 'mobile', 'email'];
+          for (const field of requiredFields) {
+            if (!formData[field] || (typeof formData[field] === 'string' && !formData[field].trim())) {
+              setSnackbarMessage(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+              setSnackbarColor('error');
+              setSnackbarOpen(true);
+              return;
+            }
+          }
+      
+          // Validate email format
+          if (!validateEmail(formData.email)) {
+            setSnackbarMessage('Invalid email format');
+            setSnackbarColor('error');
+            setSnackbarOpen(true);
+            return;
+          }
+      
+          // Validate mobile number format
+          if (!/^\d{10}$/.test(formData.mobile)) {
+            setSnackbarMessage('Mobile number should be exactly 10 digits');
+            setSnackbarColor('error');
+            setSnackbarOpen(true);
+            return;
+          }
   
       const authToken = localStorage.getItem('token');
       if (!authToken) {
@@ -1030,22 +1064,22 @@ const EditWriter = () => {
                     variant="outlined"
                   />
                   <MDBox mt={2} display="flex" justifyContent="space-between">
-                    <Button
-                      variant="contained"
-                      color="white"
+                    <MDButton
+                      variant="gradient"
+                      color={sidenavColor}
                       onClick={() => navigate('/writer')}
-                      sx={{ color: 'blue' }}
+                      
                     >
                       Cancel
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="white"
+                    </MDButton>
+                    <MDButton
+                      variant="gradient"
+                      color={sidenavColor}
                       onClick={handleSave}
-                      sx={{ color: 'blue' }}
+                      
                     >
                       Save
-                    </Button>
+                    </MDButton>
                   </MDBox>
                 </form>
               </MDBox>

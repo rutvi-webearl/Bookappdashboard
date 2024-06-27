@@ -198,27 +198,23 @@
 //   );
 // }
 
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
 
-Coded by www.creative-tim.com
 
- =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+
+
+
+
+
+
+
+
+
 
 import { useState, useEffect, useMemo } from "react";
+import { Routes, Route, Navigate, useLocation, BrowserRouter as Router } from "react-router-dom";
 
-// react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
-// @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
@@ -226,38 +222,39 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 
-// Material Dashboard 2 React themes
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
 
-// Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
-// RTL plugins
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-// Material Dashboard 2 React routes
 import routes from "routes";
-// Material Dashboard 2 React contexts
+import writerroutes from "writerroutes";
+
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
-// Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
-// Import AddWriter component
+import { UserRoleProvider, useUserRole } from "context/ValidationContext";
+
 import AddWriter from "layouts/writer/AddWriter";
 import EditWriter from "layouts/writer/EditWriter";
 import ForgetPassword from "layouts/authentication/sign-in/forgotpass";
 import DeleteWriter from "layouts/writer/DeleteWriter";
 import Basic from "layouts/authentication/sign-in";
+import WriterSignIn from "writerlayouts/authentication/sign-in";
+import WriterSignUp from "writerlayouts/authentication/sign-up";
+import Book from "writerlayouts/books";
+import WDashboard from "writerlayouts/wdashboard";
+import WSidenav from "writerexamples/Sidenav";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -328,6 +325,17 @@ export default function App() {
       return null;
     });
 
+  const AppRoutes = () => {
+    const { role } = useUserRole();
+
+    return (
+      <Routes>
+        {role === "admin" && getRoutes(routes)}
+        {role === "writer" && getRoutes(writerroutes)}
+      </Routes>
+    );
+  };
+
   const configsButton = (
     <MDBox
       display="flex"
@@ -352,67 +360,72 @@ export default function App() {
     </MDBox>
   );
 
-  return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
-              writeroutes={writeroutes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="/add-writer" element={<AddWriter />} /> {/* AddWriter route */}
-          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
-        </Routes>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 2"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          <Configurator />
-          {configsButton}
-        </>
+  return (
+    <UserRoleProvider>
+      {direction === "rtl" ? (
+        <CacheProvider value={rtlCache}>
+          <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+            <CssBaseline />
+            {layout === "wdashboard" && (
+              <>
+                <Sidenav
+                  color={sidenavColor}
+                  brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+                  brandName="Material Dashboard 2"
+                  routes={routes}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                />
+                <Configurator />
+                {configsButton}
+              </>
+            )}
+            {layout === "vr" && <Configurator />}
+            
+            <AppRoutes />
+          </ThemeProvider>
+        </CacheProvider>
+      ) : (
+        <ThemeProvider theme={darkMode ? themeDark : theme}>
+          <CssBaseline />
+          {layout === "dashboard" && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+                brandName="Material Dashboard 2"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {configsButton}
+            </>
+          )}
+          {layout === "vr" && <Configurator />}
+          <Routes>
+            {getRoutes(routes)}
+            {getRoutes(writerroutes)}
+
+            <Route path="/add-writer" element={<AddWriter />} /> 
+            <Route path="/edit-writer/:id" element={<EditWriter />} />
+            <Route path="/delete-writer/:id" element={<DeleteWriter />} />
+            <Route path="/forgot-pass" element={<ForgetPassword />} />
+            <Route path="/authentication/sign-in" element={<Basic />} />
+            <Route path="/writer-signin" element={<WriterSignIn />} />
+            <Route path="/writer-signup" element={<WriterSignUp />} />
+            <Route path="/books" element={<Book />} />
+            <Route path="/wdashboard" element={<WDashboard />} />
+            <Route path="/wSidenav" element={<WSidenav />} />
+            {writerroutes.map((route) => (
+              <Route key={route.key} path={route.route} element={route.component} />
+            ))}
+      
+            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          </Routes>
+          {/* <AppRoutes /> */}
+        </ThemeProvider>
       )}
-      {layout === "vr" && <Configurator />}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="/add-writer" element={<AddWriter />} /> 
-        <Route path="/edit-writer/:id" element={<EditWriter />} />
-        <Route path="/delete-writer/:id" element={<DeleteWriter />} />
-        <Route path="/forgot-pass" element={<ForgetPassword />} />
-        <Route path="/authentication/sign-in" element={<Basic />} />
-        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
-      </Routes>
-    </ThemeProvider>
+    </UserRoleProvider>
   );
 }
