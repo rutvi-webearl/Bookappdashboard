@@ -255,6 +255,8 @@ import WriterSignUp from "writerlayouts/authentication/sign-up";
 import Book from "writerlayouts/books";
 import WDashboard from "writerlayouts/wdashboard";
 import WSidenav from "writerexamples/Sidenav";
+import Bookdetails from "layouts/books/bookdetails";
+import Booklist from "layouts/books/index";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -415,6 +417,8 @@ export default function App() {
             <Route path="/writer-signin" element={<WriterSignIn />} />
             <Route path="/writer-signup" element={<WriterSignUp />} />
             <Route path="/books" element={<Book />} />
+            <Route path="/booklist" element={<Booklist />} />
+            <Route path="/bookdetails/:bookId" element={<Bookdetails />} />
             <Route path="/wdashboard" element={<WDashboard />} />
             <Route path="/wSidenav" element={<WSidenav />} />
             {writerroutes.map((route) => (

@@ -11,6 +11,7 @@ import Writer from "layouts/writer";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Allusers from "layouts/allusers/allusers";
+import Booklist from "layouts/books";
 
 const routes = [
   {
@@ -79,12 +80,21 @@ const routes = [
   // },
   {
     type: "collapse",
+    name: "Books",
+    key: "book",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/booklist",
+    component: <Booklist />,
+  },
+  {
+    type: "collapse",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
   },
+
   // {
   //   type: "collapse",
   //   name: "Sign In",

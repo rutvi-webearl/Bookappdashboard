@@ -403,7 +403,7 @@ function Writers() {
   ];
 
   const rows = writers.map((writer) => ({
-    name: <Author image={writer.photo} name={writer.name} email={writer.email} />,
+    name: <Author name={writer.name} email={writer.email} />,
     dob: writer.dob,
     city: writer.city,
     state: writer.state,
