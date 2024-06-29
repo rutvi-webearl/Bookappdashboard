@@ -592,7 +592,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         <DialogActions>
         <MDBox p={2} mt="auto">
           <MDButton
-            onClick={openDialog}
+            onClick={confirmLogout}
             variant="gradient"
             color={sidenavColor}
             fullWidth
@@ -602,7 +602,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         </MDBox>
         <MDBox p={2} mt="auto">
           <MDButton
-            onClick={openDialog}
+            onClick={closeDialog}
             variant="gradient"
             color={sidenavColor}
             fullWidth
