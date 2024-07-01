@@ -576,11 +576,11 @@ const AddWriter = () => {
   };
 
   const handleInsert = async () => {
-    if (isSubmitting) {
-      return;
-    }
+    // if (isSubmitting) {
+    //   return;
+    // }
     try {
-      setIsSubmitting(true);
+      // setIsSubmitting(true);
       const requiredFields = ['name', 'dob', 'country', 'state', 'city', 'gender', 'mobile', 'email', 'file'];
       for (const field of requiredFields) {
         if (!formData[field] || (typeof formData[field] === 'string' && !formData[field].trim())) {
