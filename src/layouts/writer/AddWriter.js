@@ -530,7 +530,7 @@ const AddWriter = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarColor, setSnackbarColor] = useState('info');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [controller] = useMaterialUIController();
   const { sidenavColor } = controller;
@@ -834,7 +834,7 @@ const AddWriter = () => {
                       variant="gradient"
                       color={sidenavColor}
                       onClick={handleInsert} // Changed to handleInsert
-                      disabled={isSubmitting}
+                      // disabled={isSubmitting}
                     >
                       Save
                     </MDButton>
