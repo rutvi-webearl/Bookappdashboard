@@ -1,24 +1,25 @@
+
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import {
 //   Button,
 //   TextField,
-//   Grid,
-//   Card,
+//   Select,
 //   MenuItem,
 //   FormControl,
 //   InputLabel,
-//   Select,
+//   FormControlLabel,
 //   Checkbox,
-//   FormControlLabel
+//   Card,
+//   Grid
 // } from '@mui/material';
-// import CountryStateCityData from './CountryStateCity.json'; // Adjust the path based on your folder structure
-
 // import MDBox from 'components/MDBox';
 // import MDTypography from 'components/MDTypography';
 // import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 // import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 // import Footer from 'examples/Footer';
+// import CountryStateCity from './CountryStateCity.json';
+// import MDSnackbar from 'components/MDSnackbar';
 // import { useMaterialUIController } from 'context';
 // import MDButton from 'components/MDButton';
 
@@ -31,65 +32,40 @@
 //     state: '',
 //     country: '',
 //     gender: '',
-//     photo: null,
-//     status: false,
+//     file: null,
+//     status: true,
 //     mobile: '',
 //     email: ''
 //   });
-
-//   const [formErrors, setFormErrors] = useState({
-//     name: '',
-//     dob: '',
-//     city: '',
-//     state: '',
-//     country: '',
-//     gender: '',
-//     photo: '',
-//     status: '',
-//     mobile: '',
-//     email: ''
-//   });
-
 //   const [countriesArray, setCountriesArray] = useState([]);
 //   const [statesArray, setStatesArray] = useState([]);
 //   const [citiesArray, setCitiesArray] = useState([]);
-
 //   const [snackbarOpen, setSnackbarOpen] = useState(false);
 //   const [snackbarMessage, setSnackbarMessage] = useState('');
-//   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-//   const [snackbarDuration, setSnackbarDuration] = useState(3000);
+//   const [snackbarColor, setSnackbarColor] = useState('info');
+//   // const [isSubmitting, setIsSubmitting] = useState(false);
 
 //   const [controller] = useMaterialUIController();
 //   const { sidenavColor } = controller;
 
 //   useEffect(() => {
-//     // Initialize countries array from CountryStateCityData
-//     if (CountryStateCityData && Array.isArray(CountryStateCityData)) {
-//       setCountriesArray(CountryStateCityData.map(country => country.name));
-//     }
+//     // Initialize countries array from CountryStateCity.json
+//     setCountriesArray(CountryStateCity.map(country => country.name));
 //   }, []);
 
 //   const handleChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     const newValue = type === 'checkbox' ? checked : value;
-
-//     // Update form data based on input change
-//     setFormData((prevState) => ({
-//       ...prevState,
-//       [name]: newValue,
-//     }));
-
-//     // Clear previous error for the field
-//     setFormErrors((prevState) => ({
-//       ...prevState,
-//       [name]: '',
-//     }));
-
-//     // Handle dynamic population of states and cities based on selected country and state
+//     const { name, value } = e.target;
+//     if (name !== 'name') {
+//       setFormData((prevState) => ({
+//         ...prevState,
+//         [name]: value,
+//       }));
+//     }
+  
 //     if (name === 'country') {
-//       const selectedCountry = CountryStateCityData.find((country) => country.name === value);
+//       const selectedCountry = CountryStateCity.find((country) => country.name === value);
 //       if (selectedCountry) {
-//         setStatesArray(selectedCountry.states || []);
+//         setStatesArray(selectedCountry.states);
 //         setCitiesArray([]);
 //         setFormData((prevState) => ({
 //           ...prevState,
@@ -98,206 +74,129 @@
 //         }));
 //       }
 //     }
-
+  
 //     if (name === 'state') {
-//       const selectedCountry = CountryStateCityData.find((country) => country.name === formData.country);
+//       const selectedCountry = CountryStateCity.find((country) => country.name === formData.country);
 //       const selectedState = selectedCountry?.states.find((state) => state.name === value);
 //       if (selectedState) {
-//         setCitiesArray(selectedState.cities || []);
+//         setCitiesArray(selectedState.cities);
 //         setFormData((prevState) => ({
 //           ...prevState,
 //           city: '',
 //         }));
 //       }
 //     }
-
-//     // Example: Validation logic for each field
-//     switch (name) {
-//       case 'name':
-//         if (!value.trim()) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Name cannot be empty.',
-//           }));
-//         }
-//         break;
-//       case 'dob':
-//         if (!value) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'DOB cannot be empty.',
-//           }));
-//         }
-//         break;
-//       case 'email':
-//         if (!value.trim()) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Email cannot be empty.',
-//           }));
-//         } else if (!isValidEmail(value)) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Please enter a valid email.',
-//           }));
-//         }
-//         break;
-//       case 'country':
-//         if (!value) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Please select a Country.',
-//           }));
-//         }
-//         break;
-//       case 'state':
-//         if (!value) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Please select a State.',
-//           }));
-//         }
-//         break;
-//       case 'city':
-//         if (!value) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Please select a City.',
-//           }));
-//         }
-//         break;
-//       case 'gender':
-//         if (!value) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Please select Gender.',
-//           }));
-//         }
-//         break;
-//       case 'mobile':
-//         if (!value.trim()) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Mobile cannot be empty.',
-//           }));
-//         } else if (!isValidMobile(value)) {
-//           setFormErrors((prevState) => ({
-//             ...prevState,
-//             [name]: 'Mobile number must be 10 digits long without spaces.',
-//           }));
-//         }
-//         break;
-//       default:
-//         break;
-//     }
 //   };
 
 //   const handleInsert = async () => {
+//     // if (isSubmitting) {
+//     //   return;
+//     // }
 //     try {
-//       // Check for form errors before proceeding
-//       for (const key in formErrors) {
-//         if (formErrors[key]) {
-//           handleSnackbarOpen(formErrors[key], 'error');
+//       // setIsSubmitting(true);
+//       const requiredFields = ['name', 'dob', 'country', 'state', 'city', 'gender', 'mobile', 'email', 'file'];
+//       for (const field of requiredFields) {
+//         if (!formData[field] || (typeof formData[field] === 'string' && !formData[field].trim())) {
+//           setSnackbarMessage(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+//           setSnackbarColor('error');
+//           setSnackbarOpen(true);
 //           return;
 //         }
 //       }
-
-//       const formDataToSend = new FormData();
-//       formDataToSend.append("name", formData.name);
-//       formDataToSend.append("dob", formData.dob);
-//       formDataToSend.append("city", formData.city);
-//       formDataToSend.append("state", formData.state);
-//       formDataToSend.append("country", formData.country);
-//       formDataToSend.append("gender", formData.gender);
-//       formDataToSend.append("status", formData.status);
-//       formDataToSend.append("mobile", formData.mobile);
-//       formDataToSend.append("email", formData.email);
-
-//       if (formData.photo instanceof File) {
-//         formDataToSend.append("file", formData.photo, formData.photo.name);
+  
+//       if (!validateEmail(formData.email)) {
+//         setSnackbarMessage('Invalid email format');
+//         setSnackbarColor('error');
+//         setSnackbarOpen(true);
+//         return;
+//       }
+  
+//       if (!/^\d{10}$/.test(formData.mobile)) {
+//         setSnackbarMessage('Mobile number should be exactly 10 digits');
+//         setSnackbarColor('error');
+//         setSnackbarOpen(true);
+//         return;
 //       }
 
-//       const response = await fetch(
-//         "https://bookingreadingapp.onrender.com/api/author/registerAuthor",
-//         {
-//           method: "POST",
-//           headers: {
-//             'Authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTk1NTc2OTYsImV4cCI6MTcyMDQyMTY5Nn0.WtsuE8Q43EDivE2xz51IroDiQoz022DK2yY73nL099I",
-//           },
-//           body: formDataToSend,
-//         }
-//       );
-
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok");
+//       const authToken = localStorage.getItem('token');
+//       if (!authToken) {
+//         console.error('No auth token found in local storage');
+//         return;
 //       }
-
-//       setFormData({
-//         name: "",
-//         dob: "",
-//         city: "",
-//         state: "",
-//         country: "",
-//         gender: "",
-//         photo: null,
-//         status: false,
-//         mobile: "",
-//         email: "",
+  
+//       const data = new FormData();
+//       for (const key in formData) {
+//         data.append(key, formData[key]);
+//       }
+  
+//       const response = await fetch('https://bookingreadingapp.onrender.com/api/author/registerAuthor', {
+//         method: 'POST',
+//         headers: {
+//           'Authorization': authToken
+//         },
+//         body: data
 //       });
-
-//       handleSnackbarOpen("Successfully registered!", "success", true);
-//       navigate('/writer');
+  
+//       if (response.ok) {
+//         console.log('Writer added successfully');
+//         setSnackbarMessage('Writer added successfully');
+//         setSnackbarColor('success');
+//         setSnackbarOpen(true);
+//         setTimeout(() => navigate('/writer'), 2000);
+//       } else {
+//         console.error('Failed to add writer:', response.statusText);
+//       }
 //     } catch (error) {
-//       console.error("Error:", error);
-//       handleSnackbarOpen("An error occurred. Please try again.", "error");
+//       console.error('Error adding writer:', error);
 //     }
 //   };
 
-//   const handleSnackbarOpen = (message, severity) => {
-//     setSnackbarMessage(message);
-//     setSnackbarSeverity(severity);
-//     setSnackbarOpen(true);
+//   const handleSnackbarClose = () => {
+//     setSnackbarOpen(false);
 //   };
 
-//   // Function to validate email format
-//   const isValidEmail = (email) => {
-//     // Regular expression for basic email validation
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     return emailRegex.test(email);
+//   const handleNameChange = (e) => {
+//     const { value } = e.target;
+//     if (value.startsWith(' ')) {
+//       setSnackbarOpen(true);
+//       setSnackbarMessage('Name should not start with a space');
+//       setSnackbarColor('error');
+//     } else {
+//       setFormData({ ...formData, name: value });
+//     }
 //   };
 
-//   // Function to validate mobile number format
-//   const isValidMobile = (mobile) => {
-//     // Regular expression for basic mobile number validation (adjust as per your requirements)
-//     const mobileRegex = /^[0-9]{10}$/;
-//     return mobileRegex.test(mobile);
+//   const handleMobileChange = (e) => {
+//     const { value } = e.target;
+//     if (/^\d{0,10}$/.test(value)) {
+//       setFormData({ ...formData, mobile: value });
+//     } else {
+//       setSnackbarOpen(true);
+//       setSnackbarMessage('Mobile number should be exactly 10 digits');
+//       setSnackbarColor('error');
+//     }
 //   };
 
-//   const handlePhotoUpload = (e) => {
+//   const handlePhotoChange = (e) => {
 //     const file = e.target.files[0];
-//     setFormData((prevState) => ({
-//       ...prevState,
-//       photo: file,
-//     }));
+//     if (file) {
+//       setFormData({ ...formData, file: file });
+//     }
+//   };
+
+//   const validateEmail = (email) => {
+//     const emailRegex = /^[^\s@]+@gmail\.com$/;
+//     return emailRegex.test(email);
 //   };
 
 //   return (
 //     <DashboardLayout>
 //       <DashboardNavbar />
 //       <MDBox pt={6} pb={3}>
-//         <Grid container spacing={6}>
-//           <Grid item xs={12}>
+//         <Grid container spacing={6} justifyContent="center">
+//           <Grid item xs={12} md={8}>
 //             <Card>
-//               <MDBox
-//                 mx={2}
-//                 mt={-3}
-//                 py={3}
-//                 px={2}
-//                 variant="gradient"
-//                 bgColor="info"
-//                 borderRadius="lg"
-//                 coloredShadow="info"
-//               >
+//               <MDBox mx={2} mt={-3} py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
 //                 <MDTypography variant="h6" color="white">
 //                   Add Writer
 //                 </MDTypography>
@@ -305,41 +204,43 @@
 //               <MDBox p={3}>
 //                 <form>
 //                   <TextField
-//                     autoFocus
-//                     required
-//                     margin="dense"
-//                     id="name"
-//                     name="name"
-//                     label="Name"
-//                     type="text"
 //                     fullWidth
+//                     label="Name"
+//                     margin="normal"
+//                     name="name"
 //                     value={formData.name}
-//                     onChange={handleChange}
-//                     error={!!formErrors.name}
-//                     helperText={formErrors.name}
+//                     onChange={handleNameChange}
+//                     variant="outlined"
 //                   />
 //                   <TextField
-//                     margin="dense"
-//                     id="dob"
-//                     name="dob"
+//                     fullWidth
 //                     label="DOB"
 //                     type="date"
-//                     fullWidth
+//                     margin="normal"
+//                     name="dob"
 //                     value={formData.dob}
 //                     onChange={handleChange}
+//                     variant="outlined"
 //                     InputLabelProps={{ shrink: true }}
-//                     error={!!formErrors.dob}
-//                     helperText={formErrors.dob}
 //                   />
-//                   <FormControl fullWidth margin="dense">
+//                   {/* <TextField
+//                     fullWidth
+//                     label="DOB"
+//                     type="date"
+//                     margin="normal"
+//                     name="dob"
+//                     value={formData.dob}
+//                     onChange={handleChange}
+//                     variant="outlined"
+//                   /> */}
+//                   <FormControl fullWidth margin="normal">
 //                     <InputLabel>Country</InputLabel>
 //                     <Select
-//                       value={formData.country}
 //                       style={{ height: "40px" }}
+//                       value={formData.country}
 //                       onChange={handleChange}
 //                       name="country"
-//                       error={!!formErrors.country}
-//                       fullWidth
+//                       variant="outlined"
 //                     >
 //                       {countriesArray.map((country) => (
 //                         <MenuItem key={country} value={country}>
@@ -347,22 +248,16 @@
 //                         </MenuItem>
 //                       ))}
 //                     </Select>
-//                     {formErrors.country && (
-//                       <MDTypography variant="caption" color="error">
-//                         {formErrors.country}
-//                       </MDTypography>
-//                     )}
 //                   </FormControl>
-//                   <FormControl fullWidth margin="dense">
+//                   <FormControl fullWidth margin="normal">
 //                     <InputLabel>State</InputLabel>
 //                     <Select
-//                       value={formData.state}
 //                       style={{ height: "40px" }}
+//                       value={formData.state}
 //                       onChange={handleChange}
 //                       name="state"
 //                       disabled={!formData.country}
-//                       error={!!formErrors.state}
-//                       fullWidth
+//                       variant="outlined"
 //                     >
 //                       {statesArray.map((state) => (
 //                         <MenuItem key={state.name} value={state.name}>
@@ -370,22 +265,16 @@
 //                         </MenuItem>
 //                       ))}
 //                     </Select>
-//                     {formErrors.state && (
-//                       <MDTypography variant="caption" color="error">
-//                         {formErrors.state}
-//                       </MDTypography>
-//                     )}
 //                   </FormControl>
-//                   <FormControl fullWidth margin="dense">
+//                   <FormControl fullWidth margin="normal">
 //                     <InputLabel>City</InputLabel>
 //                     <Select
-//                       value={formData.city}
 //                       style={{ height: "40px" }}
+//                       value={formData.city}
 //                       onChange={handleChange}
 //                       name="city"
 //                       disabled={!formData.state}
-//                       error={!!formErrors.city}
-//                       fullWidth
+//                       variant="outlined"
 //                     >
 //                       {citiesArray.map((city) => (
 //                         <MenuItem key={city.name} value={city.name}>
@@ -393,85 +282,75 @@
 //                         </MenuItem>
 //                       ))}
 //                     </Select>
-//                     {formErrors.city && (
-//                       <MDTypography variant="caption" color="error">
-//                         {formErrors.city}
-//                       </MDTypography>
-//                     )}
 //                   </FormControl>
-//                   <FormControl fullWidth margin="dense">
+//                   <FormControl fullWidth margin="normal">
 //                     <InputLabel>Gender</InputLabel>
 //                     <Select
 //                       style={{ height: "40px" }}
 //                       value={formData.gender}
 //                       onChange={handleChange}
 //                       name="gender"
-//                       error={!!formErrors.gender}
-//                       fullWidth
+//                       variant="outlined"
 //                     >
 //                       <MenuItem value="Male">Male</MenuItem>
 //                       <MenuItem value="Female">Female</MenuItem>
 //                       <MenuItem value="Other">Other</MenuItem>
 //                     </Select>
-//                     {formErrors.gender && (
-//                       <MDTypography variant="caption" color="error">
-//                         {formErrors.gender}
-//                       </MDTypography>
-//                     )}
 //                   </FormControl>
 //                   <FormControlLabel
 //                     control={
 //                       <Checkbox
 //                         checked={formData.status}
-//                         onChange={handleChange}
-//                         name="status"
+//                         onChange={(e) =>
+//                           setFormData({ ...formData, status: e.target.checked })
+//                         }
 //                         color="primary"
 //                       />
 //                     }
 //                     label="Status"
 //                   />
 //                   <input
-//                     accept="image/*"
-//                     style={{ display: 'none' }}
-//                     id="photo-upload"
 //                     type="file"
-//                     onChange={handlePhotoUpload}                 
+//                     name="photo"
+//                     onChange={handlePhotoChange}
+//                     accept="image/*"
 //                   />
-//                   <label htmlFor="photo-upload">
-//                     <MDButton variant="gradient" color={sidenavColor} component="span">
-//                       Upload Photo
-//                     </MDButton>
-//                   </label>
-//                   {formData.photo && <p>{formData.photo.name}</p>}
 //                   <TextField
-//                     margin="dense"
-//                     id="mobile"
-//                     name="mobile"
+//                     fullWidth
 //                     label="Mobile"
-//                     type="text"
-//                     fullWidth
+//                     margin="normal"
+//                     name="mobile"
 //                     value={formData.mobile}
-//                     onChange={handleChange}
-//                     error={!!formErrors.mobile}
-//                     helperText={formErrors.mobile}
+//                     onChange={handleMobileChange}
+//                     variant="outlined"
 //                   />
 //                   <TextField
-//                     margin="dense"
-//                     id="email"
-//                     name="email"
-//                     label="Email"
-//                     type="email"
 //                     fullWidth
+//                     label="Email"
+//                     margin="normal"
+//                     type="email"
+//                     name="email"
 //                     value={formData.email}
 //                     onChange={handleChange}
-//                     error={!!formErrors.email}
-//                     helperText={formErrors.email}
+//                     variant="outlined"
 //                   />
-//                   <MDBox mt={3}>
-//                     <Button onClick={() => navigate('/writer')}>Cancel</Button>
-//                     <Button onClick={handleInsert} color="primary">
-//                       Ok
-//                     </Button>
+//                   <MDBox mt={2} display="flex" justifyContent="space-between">
+//                     <MDButton
+//                       variant="gradient"
+//                       color={sidenavColor}
+//                       onClick={() => navigate('/writer')}
+                      
+//                     >
+//                       Cancel
+//                     </MDButton>
+//                     <MDButton
+//                       variant="gradient"
+//                       color={sidenavColor}
+//                       onClick={handleInsert} // Changed to handleInsert
+//                       // disabled={isSubmitting}
+//                     >
+//                       Save
+//                     </MDButton>
 //                   </MDBox>
 //                 </form>
 //               </MDBox>
@@ -480,6 +359,16 @@
 //         </Grid>
 //       </MDBox>
 //       <Footer />
+//       <MDSnackbar
+//         color={snackbarColor}
+//         icon="notifications"
+//         title="Notification"
+//         content={snackbarMessage}
+//         open={snackbarOpen}
+//         onClose={handleSnackbarClose}
+//         close={() => setSnackbarOpen(false)}
+//         bgWhite
+//       />
 //     </DashboardLayout>
 //   );
 // };
@@ -710,24 +599,17 @@ const AddWriter = () => {
                     variant="outlined"
                     InputLabelProps={{ shrink: true }}
                   />
-                  {/* <TextField
-                    fullWidth
-                    label="DOB"
-                    type="date"
-                    margin="normal"
-                    name="dob"
-                    value={formData.dob}
-                    onChange={handleChange}
-                    variant="outlined"
-                  /> */}
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>Country</InputLabel>
+                  <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                  <FormControl fullWidth margin="normal" variant="outlined">
+                    <InputLabel htmlFor="country-select">Country</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.country}
                       onChange={handleChange}
                       name="country"
-                      variant="outlined"
+                      label="Country"
+                      imputProps={{id: 'country-select',}}
                     >
                       {countriesArray.map((country) => (
                         <MenuItem key={country} value={country}>
@@ -736,15 +618,21 @@ const AddWriter = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>State</InputLabel>
+                  </Grid>
+                  <Grid item xs={4}>
+                  <FormControl fullWidth margin="normal"  variant="outlined">
+                    <InputLabel htmlFor="state-select">State</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.state}
                       onChange={handleChange}
                       name="state"
                       disabled={!formData.country}
-                      variant="outlined"
+                      label="State"
+                      inputProps={{
+                        id: 'state-select',
+                      }}
+              
                     >
                       {statesArray.map((state) => (
                         <MenuItem key={state.name} value={state.name}>
@@ -753,15 +641,20 @@ const AddWriter = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>City</InputLabel>
+                  </Grid>
+                  <Grid item xs={4}>
+                  <FormControl fullWidth margin="normal" variant="outlined">
+                    <InputLabel htmlFor="city-select">City</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.city}
                       onChange={handleChange}
                       name="city"
                       disabled={!formData.state}
-                      variant="outlined"
+                      label="City"
+                      inputProps={{
+                        id: 'city-select',
+                      }}
                     >
                       {citiesArray.map((city) => (
                         <MenuItem key={city.name} value={city.name}>
@@ -770,14 +663,20 @@ const AddWriter = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>Gender</InputLabel>
+                  </Grid>
+                  </Grid>
+                  <FormControl fullWidth margin="normal" variant="outlined">
+                    <InputLabel htmlFor="gender-select">Gender</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.gender}
                       onChange={handleChange}
                       name="gender"
-                      variant="outlined"
+                      label="Gender"
+                      inputProps={{
+                        id: 'gender-select',
+                      }}
+                   
                     >
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
