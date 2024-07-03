@@ -1,3 +1,4 @@
+
 // import React, { useEffect, useState } from 'react';
 // import { useParams, useNavigate } from 'react-router-dom';
 // import {
@@ -17,246 +18,11 @@
 // import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 // import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 // import Footer from 'examples/Footer';
-
-// const EditWriter = () => {
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     dob: '',
-//     city: '',
-//     state: '',
-//     country: '',
-//     gender: '', // Ensure a valid initial value
-//     photo: '',
-//     status: '',
-//     mobile: '',
-//     email: ''
-//   });
-
-//   useEffect(() => {
-//     const fetchWriter = async () => {
-//       try {
-//         const authToken = localStorage.getItem('token');
-//         if (!authToken) {
-//           console.error('No auth token found in local storage');
-//           return;
-//         }
-
-//         const response = await fetch(`https://bookingreadingapp.onrender.com/api/author/profileDisplay/${id}`, {
-//           method: 'GET',
-//           headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': authToken
-//           }
-//         });
-
-//         if (response.ok) {
-//           const writerData = await response.json();
-//           console.log('Fetched Writer Data:', writerData);
-//           setFormData(writerData);
-//         } else {
-//           console.error('Failed to fetch writer data:', response.statusText);
-//         }
-//       } catch (error) {
-//         console.error('Error fetching writer data:', error);
-//       }
-//     };
-
-//     fetchWriter();
-//   }, [id]);
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   const handleSave = async () => {
-//     try {
-//       const authToken = localStorage.getItem('token');
-//       if (!authToken) {
-//         console.error('No auth token found in local storage');
-//         return;
-//       }
-
-//       const response = await fetch(`https://bookingreadingapp.onrender.com/api/author/editAuthor/${id}`, {
-//         method: 'PATCH',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': authToken
-//         },
-//         body: JSON.stringify(formData)
-//       });
-
-//       if (response.ok) {
-//         console.log('Writer data updated successfully');
-//         navigate('/writer'); // Redirect to writers list after saving
-//       } else {
-//         console.error('Failed to update writer data:', response.statusText);
-//       }
-//     } catch (error) {
-//       console.error('Error updating writer data:', error);
-//     }
-//   };
-
-//   return (
-//     <DashboardLayout>
-//       <DashboardNavbar />
-//       <MDBox pt={6} pb={3}>
-//         <Grid container spacing={6} justifyContent="center">
-//           <Grid item xs={12} md={8}>
-//             <Card>
-//               <MDBox mx={2} mt={-3} py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
-//                 <MDTypography variant="h6" color="white">
-//                   Edit Writer
-//                 </MDTypography>
-//               </MDBox>
-//               <MDBox p={3}>
-//                 <form>
-//                   <TextField
-//                     fullWidth
-//                     label="Name"
-//                     margin="normal"
-//                     name="name"
-//                     value={formData.name}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="DOB"
-//                     type="date"
-//                     margin="normal"
-//                     name="dob"
-//                     value={formData.dob}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="City"
-//                     margin="normal"
-//                     name="city"
-//                     value={formData.city}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="State"
-//                     margin="normal"
-//                     name="state"
-//                     value={formData.state}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="Country"
-//                     margin="normal"
-//                     name="country"
-//                     value={formData.country}
-//                     onChange={handleChange}
-//                   />
-//                   <FormControl fullWidth margin="normal">
-//                     <InputLabel>Gender</InputLabel>
-//                     <Select
-//                       value={formData.gender}
-//                       onChange={handleChange}
-//                       name="gender"
-//                     >
-//                       <MenuItem value="Male">Male</MenuItem>
-//                       <MenuItem value="Female">Female</MenuItem>
-//                       <MenuItem value="Other">Other</MenuItem>
-//                     </Select>
-//                   </FormControl>
-//                   <FormControlLabel
-//                     control={
-//                       <Checkbox
-//                         checked={formData.status}
-//                         onChange={(e) =>
-//                           setFormData({ ...formData, status: e.target.checked })
-//                         }
-//                         color="primary"
-//                       />
-//                     }
-//                     label="Status"
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="Photo"
-//                     margin="normal"
-//                     name="photo"
-//                     value={formData.photo}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="Status"
-//                     margin="normal"
-//                     name="status"
-//                     value={formData.status}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="Mobile"
-//                     margin="normal"
-//                     name="mobile"
-//                     value={formData.mobile}
-//                     onChange={handleChange}
-//                   />
-//                   <TextField
-//                     fullWidth
-//                     label="Email"
-//                     margin="normal"
-//                     type="email"
-//                     name="email"
-//                     value={formData.email}
-//                     onChange={handleChange}
-//                   />
-//                   <MDBox mt={2} display="flex" justifyContent="space-between">
-//                     <Button variant="contained" color="primary" onClick={() => navigate('/writer')}>
-//                       Cancel
-//                     </Button>
-//                     <Button variant="contained" color="primary" onClick={handleSave}>
-//                       Save
-//                     </Button>
-//                   </MDBox>
-//                 </form>
-//               </MDBox>
-//             </Card>
-//           </Grid>
-//         </Grid>
-//       </MDBox>
-//       <Footer />
-//     </DashboardLayout>
-//   );
-// };
-
-// export default EditWriter;
-
-// // Example of storing the token in local storage:
-// // localStorage.getItem('token');
-
-// import React, { useEffect, useState } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import {
-//   Button,
-//   TextField,
-//   Select,
-//   MenuItem,
-//   FormControl,
-//   InputLabel,
-//   FormControlLabel,
-//   Checkbox,
-//   Card,
-//   Grid,
-//   Snackbar,
-//   SnackbarContent
-// } from '@mui/material';
-// import MDBox from 'components/MDBox';
-// import MDTypography from 'components/MDTypography';
-// import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
-// import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
-// import Footer from 'examples/Footer';
 // import CountryStateCity from './CountryStateCity.json';
+// import MDSnackbar from 'components/MDSnackbar';
+// import { useMaterialUIController } from 'context';
+// import MDButton from 'components/MDButton';
+
 
 // const EditWriter = () => {
 //   const { id } = useParams();
@@ -279,6 +45,10 @@
 //   const [citiesArray, setCitiesArray] = useState([]);
 //   const [snackbarOpen, setSnackbarOpen] = useState(false);
 //   const [snackbarMessage, setSnackbarMessage] = useState('');
+//   const [snackbarColor, setSnackbarColor] = useState('info');
+
+//   const [controller] = useMaterialUIController();
+//   const { sidenavColor } = controller;
 
 //   useEffect(() => {
 //     const fetchWriter = async () => {
@@ -371,19 +141,49 @@
 //     }
 //   };
   
-//   const handleSave = async () => {
-//     try {
-//       if (!formData.name.trim()) {
-//         setSnackbarMessage('Name should not be empty');
-//         setSnackbarOpen(true);
-//         return;
-//       }
+//   // const handleSave = async () => {
+//   //   try {
+//   //     if (!formData.name.trim()) {
+//   //       setSnackbarMessage('Name should not be empty');
+//   //       setSnackbarColor('error');
+//   //       setSnackbarOpen(true);
+//   //       return;
+//   //     }
   
-//       if (formData.email && !validateEmail(formData.email)) {
-//         setSnackbarMessage('Invalid email format');
-//         setSnackbarOpen(true);
-//         return;
-//       }
+//   //     if (formData.email && !validateEmail(formData.email)) {
+//   //       setSnackbarMessage('Invalid email format');
+//   //       setSnackbarColor('error');
+//   //       setSnackbarOpen(true);
+//   //       return;
+//   //     }
+//       const handleSave = async () => {
+//         try {
+//           // Check if any required field is empty
+//           const requiredFields = ['name', 'dob', 'country', 'state', 'city', 'gender', 'mobile', 'email'];
+//           for (const field of requiredFields) {
+//             if (!formData[field] || (typeof formData[field] === 'string' && !formData[field].trim())) {
+//               setSnackbarMessage(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+//               setSnackbarColor('error');
+//               setSnackbarOpen(true);
+//               return;
+//             }
+//           }
+      
+//           // Validate email format
+//           if (!validateEmail(formData.email)) {
+//             setSnackbarMessage('Invalid email format');
+//             setSnackbarColor('error');
+//             setSnackbarOpen(true);
+//             return;
+//           }
+      
+//           // Validate mobile number format
+//           if (!/^\d{10}$/.test(formData.mobile)) {
+//             setSnackbarMessage('Mobile number should be exactly 10 digits');
+//             setSnackbarColor('error');
+//             setSnackbarOpen(true);
+//             return;
+//           }
   
 //       const authToken = localStorage.getItem('token');
 //       if (!authToken) {
@@ -408,6 +208,7 @@
 //       if (response.ok) {
 //         console.log('Writer data updated successfully');
 //         setSnackbarMessage('Updated successfully');
+//         setSnackbarColor('success');
 //         setSnackbarOpen(true);
 //         setTimeout(() => navigate('/writer'), 2000); // Redirect after 2 seconds
 //       } else {
@@ -453,6 +254,7 @@
 //     if (value.startsWith(' ')) {
 //       setSnackbarOpen(true);
 //       setSnackbarMessage('Name should not start with a space');
+//       setSnackbarColor('error');
 //     } else {
 //       setFormData({ ...formData, name: value });
 //     }
@@ -465,6 +267,7 @@
 //     } else {
 //       setSnackbarOpen(true);
 //       setSnackbarMessage('Mobile number should be exactly 10 digits');
+//       setSnackbarColor('error');
 //     }
 //   };
 
@@ -615,12 +418,22 @@
 //                     variant="outlined"
 //                   />
 //                   <MDBox mt={2} display="flex" justifyContent="space-between">
-//                     <Button variant="contained" color="primary" onClick={() => navigate('/writer')}>
+//                     <MDButton
+//                       variant="gradient"
+//                       color={sidenavColor}
+//                       onClick={() => navigate('/writer')}
+                      
+//                     >
 //                       Cancel
-//                     </Button>
-//                     <Button variant="contained" color="primary" onClick={handleSave}>
+//                     </MDButton>
+//                     <MDButton
+//                       variant="gradient"
+//                       color={sidenavColor}
+//                       onClick={handleSave}
+                      
+//                     >
 //                       Save
-//                     </Button>
+//                     </MDButton>
 //                   </MDBox>
 //                 </form>
 //               </MDBox>
@@ -629,17 +442,16 @@
 //         </Grid>
 //       </MDBox>
 //       <Footer />
-//       <Snackbar
-//         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+//       <MDSnackbar
+//         color={snackbarColor}
+//         icon="notifications"
+//         title="Notification"
+//         content={snackbarMessage}
 //         open={snackbarOpen}
-//         autoHideDuration={2000}
 //         onClose={handleSnackbarClose}
-//       >
-//         <SnackbarContent
-//           style={{ backgroundColor: 'white', color: 'black' }}
-//           message={<span id="client-snackbar">{snackbarMessage}</span>}
-//         />
-//       </Snackbar>
+//         close={() => setSnackbarOpen(false)}
+//         bgWhite
+//       />
 //     </DashboardLayout>
 //   );
 // };
@@ -961,15 +773,19 @@ const EditWriter = () => {
                     value={formData.dob}
                     onChange={handleChange}
                     variant="outlined"
+                    InputLabelProps={{ shrink: true }}
                   />
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>Country</InputLabel>
+                  <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                  <FormControl fullWidth margin="normal" variant="outlined">
+                    <InputLabel htmlFor="country-select">Country</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.country}
                       onChange={handleChange}
                       name="country"
-                      variant="outlined"
+                      label="Country"
+                      imputProps={{id: 'country-select',}}
                     >
                       {countriesArray.map((country) => (
                         <MenuItem key={country} value={country}>
@@ -978,15 +794,21 @@ const EditWriter = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>State</InputLabel>
+                  </Grid>
+                  <Grid item xs={4}>
+                  <FormControl fullWidth margin="normal"  variant="outlined">
+                    <InputLabel htmlFor="state-select">State</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.state}
                       onChange={handleChange}
                       name="state"
                       disabled={!formData.country}
-                      variant="outlined"
+                      label="State"
+                      inputProps={{
+                        id: 'state-select',
+                      }}
+              
                     >
                       {statesArray.map((state) => (
                         <MenuItem key={state.name} value={state.name}>
@@ -995,15 +817,20 @@ const EditWriter = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>City</InputLabel>
+                  </Grid>
+                  <Grid item xs={4}>
+                  <FormControl fullWidth margin="normal" variant="outlined">
+                    <InputLabel htmlFor="city-select">City</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.city}
                       onChange={handleChange}
                       name="city"
                       disabled={!formData.state}
-                      variant="outlined"
+                      label="City"
+                      inputProps={{
+                        id: 'city-select',
+                      }}
                     >
                       {citiesArray.map((city) => (
                         <MenuItem key={city.name} value={city.name}>
@@ -1012,14 +839,20 @@ const EditWriter = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel>Gender</InputLabel>
+                  </Grid>
+                  </Grid>
+                  <FormControl fullWidth margin="normal" variant="outlined">
+                    <InputLabel htmlFor="gender-select">Gender</InputLabel>
                     <Select
                       style={{ height: "40px" }}
                       value={formData.gender}
                       onChange={handleChange}
                       name="gender"
-                      variant="outlined"
+                      label="Gender"
+                      inputProps={{
+                        id: 'gender-select',
+                      }}
+                   
                     >
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
@@ -1075,8 +908,8 @@ const EditWriter = () => {
                     <MDButton
                       variant="gradient"
                       color={sidenavColor}
-                      onClick={handleSave}
-                      
+                      onClick={handleSave} // Changed to handleInsert
+                      // disabled={isSubmitting}
                     >
                       Save
                     </MDButton>
