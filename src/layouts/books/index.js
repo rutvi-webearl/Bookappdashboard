@@ -11,6 +11,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import MDBadge from 'components/MDBadge'
 
 function Booklist() {
   const [books, setBooks] = useState([]);
@@ -167,7 +168,22 @@ function Booklist() {
     book_cover_photo: book.book_cover_photo,
     createdAt: book.createdAt,
     updatedAt: book.updatedAt,
-    status: book.status,
+    status: (
+      <MDBox ml={-1}>
+        <MDBadge 
+          badgeContent={book.status} 
+          color={
+            book.status === "approve" 
+            ? "success" 
+            : book.status === "pending" 
+            ? "info" 
+            : "error"
+          } 
+          variant="gradient" 
+          size="sm" 
+        />
+      </MDBox>
+    ),
     authorDetails: book.authorDetails ? {
       name: book.authorDetails.name,
       photo: book.authorDetails.photo,
