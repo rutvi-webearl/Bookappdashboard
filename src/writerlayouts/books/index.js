@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -39,6 +38,8 @@ import Sidenav from "writerexamples/Sidenav";
 import writerroutes from "writerroutes"; 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const Author = ({ name }) => (
   <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -74,21 +75,94 @@ function Tables() {
     },
 
     { Header: "Title", accessor: "book_title", width: "15%" },
-    { Header: "Description", accessor: "book_description", width: "25%" },
- {
-    Header: "Book Content",
-    accessor: "book_page",
-    Cell: ({ value }) => (
-      <div>
-        {value.map((page, index) => (
-          <div key={index}>
-            <p>Page No: {page.page_no}</p>
-            <p>Content: {sanitizeText(page.content)}</p>
+
+    // { Header: "Description", accessor: "book_description", width: "25%" },
+
+    {
+      Header: "Description",
+      accessor: "book_description",
+      width: "25%",
+      Cell: ({ value }) => {
+        const [isExpanded, setIsExpanded] = useState(false);
+        const maxChars = 10; // Adjust the maximum number of characters
+        const truncatedValue = value.length > maxChars ? `${value.slice(0, maxChars)}...` : value;
+  
+        const toggleExpand = () => {
+          setIsExpanded(!isExpanded);
+        };
+  
+        return (
+          <div
+            style={{
+              whiteSpace: 'pre-wrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: isExpanded ? 'none' : 3, // Adjust the number of lines before cutting off
+              maxHeight: isExpanded ? 'none' : '150px' // Optional: restrict the maximum height
+            }}
+          >
+            {isExpanded ? value : truncatedValue}
+            {value.length > maxChars && (
+              <button onClick={toggleExpand} style={{ marginLeft: '10px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue', textDecoration: 'underline' }}>
+                {isExpanded ? 'Show Less' : 'Show More'}
+              </button>
+            )}
           </div>
-        ))}
+        );
+      }
+    },
+  
+
+//  {
+//     Header: "Book Content",
+//     accessor: "book_page",
+//     Cell: ({ value }) => (
+//       <div>
+//         {value.map((page, index) => (
+//           <div key={index}>
+//             <p>Page No: {page.page_no}</p>
+//             <p>Content: {sanitizeText(page.content)}</p>
+//           </div>
+//         ))}
+//       </div>
+//     ),
+//   },
+
+{
+  Header: "Book Content",
+  accessor: "book_page",
+  Cell: ({ value }) => {
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const handlePreviousPage = () => {
+      if (currentPage > 0) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+
+    const handleNextPage = () => {
+      if (currentPage < value.length - 1) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+
+    return (
+      <div>
+        <p>Page No: {value[currentPage].page_no}</p>
+        <p>Content: {sanitizeText(value[currentPage].content)}</p>
+        <IconButton onClick={handlePreviousPage} disabled={currentPage === 0}>
+          <NavigateBeforeIcon />
+        </IconButton>
+        <IconButton onClick={handleNextPage} disabled={currentPage === value.length - 1}>
+          <NavigateNextIcon />
+        </IconButton>
       </div>
-    ),
-  },
+    );
+  }
+},
+
     {
       Header: "Actions",
       accessor: "_id",
@@ -554,7 +628,7 @@ function Tables() {
                 <Button
                   variant="contained"
                   component="label"
-                  color="primary"
+                  color="info"
                 >
                   Upload Cover Photo
                   <input
@@ -594,7 +668,7 @@ function Tables() {
                 ))}
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="info"
                   onClick={() => setBookDetails((prevDetails) => ({
                     ...prevDetails,
                     book_page: [...prevDetails.book_page, { content: "" }]
@@ -608,7 +682,7 @@ function Tables() {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpenEditForm(false)} color="secondary">
+            <Button onClick={() => setOpenEditForm(false)} color="info">
               Cancel
             </Button>
             <Button onClick={updateBook} color="primary">

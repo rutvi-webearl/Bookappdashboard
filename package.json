@@ -17,6 +17,7 @@
     "@ckeditor/ckeditor5-react": "^8.0.0",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
+    "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.3",
     "ajv": "^8.14.0",
