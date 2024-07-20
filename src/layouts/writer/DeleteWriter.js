@@ -39,7 +39,7 @@ function DeleteWriter() {
         return;
       }
 
-      const response = await fetch(`https://bookingreadingapp.onrender.com/api/author/deleteAuthor/${writer._id}`, {
+      const response = await fetch(`https://bookreading-app.onrender.com/api/author/deleteAuthor/${writer._id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ function DeleteWriter() {
     <Dialog open={confirmDeleteOpen} onClose={handleCloseDeleteDialog}>
       <DialogTitle>Confirm Delete</DialogTitle>
       <DialogContent>
-        Are you sure you want to delete writer: {writer?.name}?
+        Are you sure you want to delete writer?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseDeleteDialog}>Cancel</Button>

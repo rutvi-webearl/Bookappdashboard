@@ -334,9 +334,9 @@ function Bookdetails() {
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTk1NTY5NzMsImV4cCI6MTcyMDQyMDk3M30.BcQ3tLRJs7Qs_0Eb-2o0ZVAmcKBJry1kd4kLYDyVho4';
+        const token = localStorage.getItem('token');
         const response = await fetch(
-          `https://bookingreadingapp.onrender.com/api/book/bookDetail/${bookId}`,
+          `https://bookreading-app.onrender.com/api/book/bookDetail/${bookId}`,
           {
             method: "GET",
             headers: {
@@ -362,9 +362,9 @@ function Bookdetails() {
 
   const handleStatusChange = async (newStatus) => {
     try {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc0MjQ5MDc0MTkwOWE0NDA4NTIwOTUiLCJpYXQiOjE3MTk1NTY5NzMsImV4cCI6MTcyMDQyMDk3M30.BcQ3tLRJs7Qs_0Eb-2o0ZVAmcKBJry1kd4kLYDyVho4';
+      const token = localStorage.getItem('token');
       const response = await fetch(
-        `https://bookingreadingapp.onrender.com/api/admin/changeStatusBook/${bookId}`,
+        `https://bookreading-app.onrender.com/api/admin/changeStatusBook/${bookId}`,
         {
           method: "POST",
           headers: {

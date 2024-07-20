@@ -16,7 +16,7 @@ const Counter = () => {
         }
 
         // Fetch total authors count
-        const authorsResponse = await fetch('https://bookingreadingapp.onrender.com/api/author/allAuthor', {
+        const authorsResponse = await fetch('https://bookreading-app.onrender.com/api/author/allAuthor', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const Counter = () => {
         }
 
         // Fetch total books count
-        const booksResponse = await fetch('https://bookingreadingapp.onrender.com/api/book/displayAllBook', {
+        const booksResponse = await fetch('https://bookreading-app.onrender.com/api/book/displayAllBook', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

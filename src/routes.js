@@ -12,7 +12,7 @@ import Writer from "layouts/writer";
 import Icon from "@mui/material/Icon";
 import Allusers from "layouts/allusers/allusers";
 import Booklist from "layouts/books";
-
+import Changepassword from "layouts/authentication/sign-in/changepass";
 const routes = [
   {
     type: "collapse",
@@ -93,6 +93,14 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
+  },
+  {
+    type: "collapse",
+    name: "Change Password",
+    key: "Changepassword",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/change-pass",
+    component: <Changepassword />,
   },
 
   // {
