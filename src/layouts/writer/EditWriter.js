@@ -384,12 +384,33 @@ const EditWriter = () => {
                       <MenuItem value="inactive">Inactive</MenuItem>
                     </Select>
                   </FormControl>
-                  <input
+                  <MDBox display="flex" alignItems="center">
+                                            <MDBox
+                                                component="img"
+                                                alt="Preview"
+                                                src={formData.file}
+                                                style={{
+                                                    width: "3rem",
+                                                    height: "3rem",
+                                                    objectFit: "cover",
+                                                    borderRadius: "50%",
+                                                }}
+                                            />
+                                            <input
+                                                type="file"
+                                                name="structure"
+                                                src={formData.file}
+                                                onChange={handleChange}
+                                                accept="image/jpeg, image/png, image/jpg"
+                                                style={{ marginLeft: "20px" }}
+                                            />
+                                        </MDBox>
+                  {/* <input
                     type="file"
                     name="photo"
                     onChange={handlePhotoChange}
                     accept="image/*"
-                  />
+                  /> */}
                   {/* <FormControl fullWidth margin="normal">
                   <input
                     type="file"
